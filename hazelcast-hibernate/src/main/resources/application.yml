@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: "dev"
+    
+---
+    
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12346648?useSSL=false
+    username: sql12346648
+    password: YwcDpammF1 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari: 
+      connection-timeout: 50000
+      maximum-pool-size: 2
+      
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+    hibernate.ddl-auto: update
+    show_sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        
+---
+        

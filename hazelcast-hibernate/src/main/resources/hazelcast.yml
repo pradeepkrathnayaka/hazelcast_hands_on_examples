@@ -1,0 +1,88 @@
+hazelcast:
+  config-replacers:
+    fail-if-value-missing: false
+    replacers:
+      - class-name: com.hazelcast.config.replacer.EncryptionReplacer
+        properties:
+          passwordFile: password.txt
+          passwordUserProperties: false
+          cipherAlgorithm: DES
+          keyLengthBits: 64
+          secretKeyAlgorithm: DES
+          secretKeyFactoryAlgorithm: PBKDF2WithHmacSHA1
+  cluster-name: my-cluster
+  instance-name: hzInstance1
+  management-center:
+    scripting-enabled: false
+  properties:
+    your-property: Value of the property
+  map:
+    default:
+      in-memory-format: BINARY
+      metadata-policy: CREATE_ON_UPDATE
+      statistics-enabled: true
+      cache-deserialized-values: ALWAYS
+      backup-count: 1
+      async-backup-count: 0
+      time-to-live-seconds: 0
+      max-idle-seconds: 0
+      eviction:
+        eviction-policy: NONE
+        max-size-policy: PER_NODE
+        size: 0
+      merge-policy:
+        batch-size: 100
+        class-name: PutIfAbsentMergePolicy
+      read-backup-data: false
+      hot-restart:
+        enabled: false
+        fsync: false
+      event-journal:
+        enabled: false
+        capacity: 10000
+        time-to-live-seconds: 0
+      merkle-tree:
+        enabled: false
+        depth: 10
+      map-store:
+        enabled: true
+        initial-mode: LAZY
+        class-name: com.hazelcast.examples.DummyStore
+        write-delay-seconds: 60
+        write-batch-size: 1000
+        write-coalescing: true
+        properties:
+          jdbc_url: my.jdbc.com
+      near-cache:
+        time-to-live-seconds: 0
+        max-idle-seconds: 60
+        invalidate-on-change: true
+        in-memory-format: BINARY
+        cache-local-entries: false
+        eviction:
+          size: 1000
+          max-size-policy: ENTRY_COUNT
+          eviction-policy: LFU
+      wan-replication-ref:
+        my-wan-cluster-batch:
+          merge-policy-class-name: PassThroughMergePolicy
+          filters:
+            - com.example.SampleFilter
+            - com.example.SampleFilter2
+          republishing-enabled: false
+  native-memory:
+    enabled: true
+    allocator-type: POOLED
+    size:
+      unit: MEGABYTES
+      value: 256
+    min-block-size: 32
+    page-size: 4194304
+    metadata-space-percentage: 12.5
+    persistent-memory-directory: /mnt/optane
+  metrics:
+    enabled: false
+    management-center:
+      enabled: false
+      retention-seconds: 30
+    collection-frequency-seconds: 10
